@@ -1,0 +1,98 @@
+<div class="ui-g ui-fluid">
+  <div class="ui-g-12">
+    <div class="card card-w-title">
+      <form #ngForm="ngForm" (ngSubmit)="persistirRegistro(ngForm)">
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-12">
+            <h1 *ngIf="acao == acoes.VISUALIZAR">Visualizar Aluno</h1>
+            <h1 *ngIf="acao == acoes.EDITAR">Alterar Aluno</h1>
+            <h1 *ngIf="acao == acoes.INSERIR">Cadastrar Aluno</h1>
+          </div>
+          <div class="ui-sm-12 ui-md-12 ui-lg-12">
+            <div class="ui-sm-6 ui-md-6">
+                            <span class="md-inputfield">
+                                <input type="text" pInputText name="nome" currencyMask [(ngModel)]="aluno.nome"
+                                       [disabled]="acao == acoes.VISUALIZAR" maxlength="19" autocomplete="off" required>
+                                <label>Nome *</label>
+                                <div class="invalid-field ui-message ui-messages-error" *ngIf="ngForm.controls['nome'] && !ngForm.controls['nome'].valid
+                                    && (ngForm.controls['nome'].touched || ngForm.submitted)">
+                                        Campo obrigatório
+                                    </div>
+                            </span>
+            </div>
+          </div>
+
+
+          <div class="ui-sm-12 ui-md-12 ui-lg-12">
+            <div class="ui-g-12 ui-md-6 ui-sm-12 labeled-dropdown filled">
+              <p-dropdown emptyFilterMessage="Nenhum registro encontrado"
+                          [options]="sexos"
+                          [(ngModel)]="aluno.sexo" placeholder="Selecione"
+                          [disabled]="acao == acoes.VISUALIZAR" required
+                          name="sexo" >
+                <ng-template let-item pTemplate="selectedItem">
+                  <span>{{item.label}}</span>
+                </ng-template>
+                <ng-template let-item pTemplate="item">
+                  <span>{{item.label}}</span>
+                </ng-template>
+              </p-dropdown>
+              <label class="float-label purple-color">Sexo: *</label>
+              <span class="md-inputfield">
+                            <div
+                              *ngIf="ngForm.controls['sexo'] && !ngForm.controls['sexo'].value && ngForm.submitted"
+                              class="ui-message ui-messages-error">
+                                    Campo obrigatório
+                            </div>
+                             </span>
+            </div>
+          </div>
+
+          <div class="ui-sm-12 ui-md-12 ui-lg-12">
+            <div class="ui-sm-6 ui-md-6">
+                            <span class="md-inputfield">
+                                <input type="text" pInputText name="email" currencyMask [(ngModel)]="aluno.email"
+                                       [disabled]="acao == acoes.VISUALIZAR" autocomplete="off" >
+                                <label>E-mail</label>
+                            </span>
+            </div>
+          </div>
+          <div class="ui-sm-12 ui-md-12 ui-lg-12">
+            <div class="ui-sm-6 ui-md-6">
+                            <span class="md-inputfield">
+                                <p-inputMask type="text" pInputText name="telefone" currencyMask [(ngModel)]="aluno.telefone" mask="(99) 99999-9999"
+                                             [disabled]="acao == acoes.VISUALIZAR" autocomplete="off" unmask="true"></p-inputMask>
+                                <label>Telefone</label>
+                            </span>
+            </div>
+          </div>
+          <div class="ui-sm-12 ui-md-12 ui-lg-12">
+            <div class="ui-sm-6 ui-md-6">
+                            <span class="md-inputfield">
+                                <p-inputMask type="text" pInputText name="cpf" currencyMask [(ngModel)]="aluno.cpf" mask="999.999.999-99"
+                                             [disabled]="acao == acoes.VISUALIZAR" maxlength="11" autocomplete="off" unmask="true"></p-inputMask>
+                                <label>CPF</label>
+                            </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui-g m-t-30">
+          <div class="ui-g-12 ui-md-2">
+            <button class="voltar-btn teal-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" pButton type="button" icon="ui-icon-chevron-left" routerLink="/aluno" label="Cancelar"></button>
+          </div>
+          <div class="ui-g-12 ui-md-8"></div>
+          <div class="ui-g-12 ui-md-2">
+            <button class="ui-widget ui-state-default ui-corner-all ui-button-text-only" pButton type="submit" label="Salvar" icon="ui-icon-save" *ngIf="acao != acoes.VISUALIZAR"></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<p-confirmDialog #dialog>
+  <p-footer>
+    <button type="button" pButton icon="pi-close" label="Não" (click)="dialog.reject()"></button>
+    <button type="button" pButton icon="pi-check" label="Sim" (click)="dialog.accept()"></button>
+  </p-footer>
+</p-confirmDialog>

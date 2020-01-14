@@ -1,0 +1,93 @@
+<div class="ui-g ui-fluid">
+  <div class="ui-g-12">
+    <div class="card card-w-title">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-12">
+          <h1>Listar Alunos</h1>
+        </div>
+
+        <div class="ui-g ui-md-11 form-buttons">
+          <div class="ui-g-2 ui-md-2 ui-sm-12" >
+            <button pButton label="Pesquisar" icon="ui-icon-search"
+                    class="pesquisar-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"
+                    (click)="getAllUtilizacaoPesquisar()">
+            </button>
+          </div>
+
+          <div class="ui-g-2 ui-md-2 ui-sm-12" >
+            <button class="novo-btn" pButton label="Cadastrar" [routerLink]="['/aluno', acoes.INSERIR]"
+                    icon="ui-icon-add">
+            </button>
+          </div>
+        </div>
+
+        <div class="ui-g-11">
+          <p-table #dt [columns]="cols" [lazy]="true" [value]="alunos.content"
+                   [paginator]="true" [rows]="10" selectionMode="single" [(selection)]="linhaSelecionada"
+                   [responsive]="true" [rowsPerPageOptions]="[10, 30, 50]" [scrollable]="true"
+                   [totalRecords]="alunos.totalElements" (onPage)="getAllDeclaracaoPage()" (onSort)="getAllDeclaracao()">
+
+            <ng-template pTemplate="colgroup" let-columns>
+              <colgroup *ngFor="let col of columns">
+                <col [ngStyle]="{'width': col.width}">
+              </colgroup>
+            </ng-template>
+
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns" [ngSwitch]="col.field" class="header-col-table">
+                  {{col.header}}
+                  <p-sortIcon [field]="col.sortField != null ? col.sortField : col.field"
+                              [pSortableColumn]="col.sortField != null ? col.sortField : col.field"></p-sortIcon>
+                </th>
+              </tr>
+              <tr>
+                <th *ngFor="let col of columns" class="sort-col-table">
+                  <input *ngIf="col.text == true" pInputText type="text" [(ngModel)]="aluno[col.field]">
+                  <p-dropdown *ngIf="col.options != null" [options]="col.options" placeholder="Selecione"
+                              [style]="{'width':'100%'}" [(ngModel)]="aluno[col.field]" appendTo='body'>
+                  </p-dropdown>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr [pSelectableRow]="rowData">
+                <td *ngFor="let col of columns">
+                  <ng-template [ngIf]="col.type == undefined ">
+                    {{ rowData[col.field] }}
+                  </ng-template>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+              <tr>
+                <td [attr.colspan]="columns.length">
+                  Nenhum registro encontrado
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+
+          <div class="total-registro">
+            Total de registros: {{alunos.totalElements}}
+          </div>
+
+        </div>
+        <div class="ui-g-1 btn-table">
+          <button type="button" pButton class="green-btn side-button" name="edit" label="Editar"
+                  value="edit" title="Editar" (click)="buttonClickEdit()" [disabled]="linhaSelecionada == null"
+          >
+          </button>
+          <button type="button" pButton class="side-button" name="view" label="Visualizar"
+                  icon="ui-icon-remove-red-eye" title="Visualizar" (click)="buttonClickView()"
+                  [disabled]="linhaSelecionada == null" >
+          </button>
+          <button type="button" pButton class="ui-button-danger side-button" name="excluir"  label="Excluir"
+                  [disabled]="linhaSelecionada == null "
+                  icon="ui-icon-do-not-disturb-alt" title="Excluir" (click)="inativar()">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="ui-g ui-fluid">
+  <div class="ui-g-12">
+    <div class="card card-w-title">
+      <form #ngForm="ngForm" (ngSubmit)="persistirRegistro(ngForm)">
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-12">
+            <h1 *ngIf="acao == acoes.VISUALIZAR">Visualizar Matricula</h1>
+            <h1 *ngIf="acao == acoes.EDITAR">Alterar Matricula</h1>
+            <h1 *ngIf="acao == acoes.INSERIR">Cadastrar Matricula</h1>
+          </div>
+
+
+          <div class="ui-sm-12 ui-md-12 ui-lg-12">
+            <div class="ui-g-12 ui-md-6 ui-sm-12 labeled-dropdown filled">
+              <p-dropdown emptyFilterMessage="Nenhum registro encontrado"
+                          [options]="alunos"
+                          [(ngModel)]="matricula.alunoId" placeholder="Selecione"
+                          [disabled]="acao == acoes.VISUALIZAR" required
+                          name="alunos" >
+                <ng-template let-item pTemplate="selectedItem">
+                  <span>{{item.label}}</span>
+                </ng-template>
+                <ng-template let-item pTemplate="item">
+                  <span>{{item.label}}</span>
+                </ng-template>
+              </p-dropdown>
+              <label class="float-label purple-color">Alunos: *</label>
+              <span class="md-inputfield">
+                            <div
+                              *ngIf="ngForm.controls['alunos'] && !ngForm.controls['alunos'].value && ngForm.submitted"
+                              class="ui-message ui-messages-error">
+                                    Campo obrigatório
+                            </div>
+                             </span>
+            </div>
+          </div>
+
+
+          <div class="ui-sm-12 ui-md-12 ui-lg-12">
+            <div class="ui-g-12 ui-md-6 ui-sm-12 labeled-dropdown filled">
+              <p-dropdown emptyFilterMessage="Nenhum registro encontrado"
+                          [options]="disciplinas"
+                          [(ngModel)]="matricula.disciplinaId" placeholder="Selecione"
+                          [disabled]="acao == acoes.VISUALIZAR" required
+                          name="disciplinas" >
+                <ng-template let-item pTemplate="selectedItem">
+                  <span>{{item.label}}</span>
+                </ng-template>
+                <ng-template let-item pTemplate="item">
+                  <span>{{item.label}}</span>
+                </ng-template>
+              </p-dropdown>
+              <label class="float-label purple-color">Disciplinas: *</label>
+              <span class="md-inputfield">
+                            <div
+                              *ngIf="ngForm.controls['disciplinas'] && !ngForm.controls['disciplinas'].value && ngForm.submitted"
+                              class="ui-message ui-messages-error">
+                                    Campo obrigatório
+                            </div>
+                             </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui-g m-t-30">
+          <div class="ui-g-12 ui-md-2">
+            <button class="voltar-btn teal-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" pButton type="button" icon="ui-icon-chevron-left" routerLink="/matricula" label="Cancelar"></button>
+          </div>
+          <div class="ui-g-12 ui-md-8"></div>
+          <div class="ui-g-12 ui-md-2">
+            <button class="ui-widget ui-state-default ui-corner-all ui-button-text-only" pButton type="submit" label="Salvar" icon="ui-icon-save" *ngIf="acao != acoes.VISUALIZAR"></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<p-confirmDialog #dialog>
+  <p-footer>
+    <button type="button" pButton icon="pi-close" label="Não" (click)="dialog.reject()"></button>
+    <button type="button" pButton icon="pi-check" label="Sim" (click)="dialog.accept()"></button>
+  </p-footer>
+</p-confirmDialog>

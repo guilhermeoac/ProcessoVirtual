@@ -1,0 +1,65 @@
+<div class="ui-g ui-fluid">
+  <div class="ui-g-12">
+    <div class="card card-w-title">
+      <form #ngForm="ngForm" (ngSubmit)="persistirRegistro(ngForm)">
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-12">
+            <h1 *ngIf="acao == acoes.VISUALIZAR">Visualizar Disciplina</h1>
+            <h1 *ngIf="acao == acoes.EDITAR">Alterar Disciplina</h1>
+            <h1 *ngIf="acao == acoes.INSERIR">Cadastrar Disciplina</h1>
+          </div>
+          <div class="ui-sm-12 ui-md-12 ui-lg-12">
+            <div class="ui-sm-6 ui-md-6">
+                            <span class="md-inputfield">
+                                <input type="text" pInputText name="nome" [(ngModel)]="disciplina.nome"
+                                       [disabled]="acao == acoes.VISUALIZAR" maxlength="19" autocomplete="off" required>
+                                <label>Nome *</label>
+                                <div class="invalid-field ui-message ui-messages-error" *ngIf="ngForm.controls['nome'] && !ngForm.controls['nome'].valid
+                                    && (ngForm.controls['nome'].touched || ngForm.submitted)">
+                                        Campo obrigatório
+                                    </div>
+                            </span>
+            </div>
+          </div>
+
+          <div class="ui-sm-12 ui-md-12 ui-lg-12">
+            <div class="ui-sm-6 ui-md-6">
+                            <span class="md-inputfield">
+                                <input type="number" pInputText name="limiteAlunos" [(ngModel)]="disciplina.limiteAlunos"
+                                       [disabled]="acao == acoes.VISUALIZAR" autocomplete="off" required>
+                                <label>Limite Alunos *</label>
+                                <div class="invalid-field ui-message ui-messages-error" *ngIf="ngForm.controls['limiteAlunos'] && !ngForm.controls['limiteAlunos'].valid
+                                    && (ngForm.controls['limiteAlunos'].touched || ngForm.submitted)">
+                                        Campo obrigatório
+                                    </div>
+                            </span>
+            </div>
+          </div>
+
+          <div class="ui-sm-12 ui-md-12 ui-lg-12">
+            <div class="ui-sm-6 ui-md-6">
+                            <span class="md-inputfield">
+                                <input type="number" pInputText name="cargaHoraria" [(ngModel)]="disciplina.cargaHoraria"
+                                       [disabled]="acao == acoes.VISUALIZAR" autocomplete="off">
+                                <label>Carga Horária </label>
+                            </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ui-g m-t-30">
+          <div class="ui-g-12 ui-md-2">
+            <button class="voltar-btn teal-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+                    pButton type="button" icon="ui-icon-chevron-left" routerLink="/disciplina"
+                    label="Cancelar"></button>
+          </div>
+          <div class="ui-g-12 ui-md-8"></div>
+          <div class="ui-g-12 ui-md-2">
+            <button class="ui-widget ui-state-default ui-corner-all ui-button-text-only" pButton type="submit"
+                    label="Salvar" icon="ui-icon-save" *ngIf="acao != acoes.VISUALIZAR"></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
